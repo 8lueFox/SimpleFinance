@@ -14,4 +14,10 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleFinance.Infrastructure\SimpleFinance.Infrastructure.csproj" />
+    <ProjectReference Include="..\SimpleFinance.Shared.Abstractions\SimpleFinance.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\SimpleFinance.Shared\SimpleFinance.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

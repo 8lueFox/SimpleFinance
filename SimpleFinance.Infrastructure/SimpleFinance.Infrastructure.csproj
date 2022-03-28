@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleFinance.Application\SimpleFinance.Application.csproj" />
+    <ProjectReference Include="..\SimpleFinance.Shared.Abstractions\SimpleFinance.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\SimpleFinance.Shared\SimpleFinance.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
