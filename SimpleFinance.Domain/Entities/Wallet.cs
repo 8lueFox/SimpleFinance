@@ -8,14 +8,14 @@ public class Wallet : AggregateRoot<ObjectId>
 
     private readonly LinkedList<WalletItem> _items;
 
-    internal Wallet(ObjectId id, WalletName walletName)
+    public Wallet(ObjectId id, WalletName walletName)
     {
         Id = id;
         _name = walletName;
         _items = new();
     }
 
-    private Wallet(ObjectId id, WalletName walletName, LinkedList<WalletItem> items)
+    public Wallet(ObjectId id, WalletName walletName, LinkedList<WalletItem> items)
         :this(id, walletName)
     {
         _items = items;

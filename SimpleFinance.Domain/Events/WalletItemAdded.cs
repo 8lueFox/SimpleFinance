@@ -2,4 +2,4 @@
 
 namespace SimpleFinance.Domain.Events;
 
-public record WalletItemAdded(Wallet PackingList, WalletItem item) : IDomainEvent;
+public record WalletItemAdded(Wallet Wallet, WalletItem item) : IDomainEvent;
