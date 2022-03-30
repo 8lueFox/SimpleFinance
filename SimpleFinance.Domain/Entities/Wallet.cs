@@ -8,6 +8,11 @@ public class Wallet : AggregateRoot<ObjectId>
 
     private readonly LinkedList<WalletItem> _items;
 
+    public Wallet()
+    {
+
+    }
+
     public Wallet(ObjectId id, WalletName walletName)
     {
         Id = id;
@@ -40,7 +45,7 @@ public class Wallet : AggregateRoot<ObjectId>
         }
     }
 
-    public void MarkItemAsSold(string currency, double quantity, DateTime dayOfBought, double priceSold)
+    public void MarkItemAsSold(string currency, double quantity, DateTime dayOfBought, float priceSold)
     {
         var item = GetItem(currency, quantity, dayOfBought);
         var soldItem = item with { DayOfSold = DateTime.Now, PriceSold = priceSold };

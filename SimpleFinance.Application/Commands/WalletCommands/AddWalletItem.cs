@@ -6,7 +6,7 @@ using SimpleFinance.Domain.ValueObjects;
 
 namespace SimpleFinance.Application.Commands.WalletCommands;
 
-public record AddWalletItem(Guid WalletId, string CurrencyName, double Quantity, double Price, CurrencyType CurrencyType) : IRequest;
+public record AddWalletItem(Guid WalletId, string CurrencyName, float Quantity, float Price, CurrencyType CurrencyType) : IRequest;
 
 internal sealed class AddWalletItemHandler : IRequestHandler<AddWalletItem>
 {

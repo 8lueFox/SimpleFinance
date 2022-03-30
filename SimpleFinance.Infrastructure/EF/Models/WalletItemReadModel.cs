@@ -1,12 +1,12 @@
 ﻿using SimpleFinance.Domain.Enums;
 
-namespace SimpleFinance.Application.DTO;
+namespace SimpleFinance.Infrastructure.EF.Models;
 
-public class WalletItemDto
+internal class WalletItemReadModel
 {
     public Guid Id { get; set; }
 
-    public string CurrencyName { get; set; } = string.Empty;
+    public string CurrencyName { get; set; }
 
     public float Quantity { get; set; }
 
@@ -19,4 +19,6 @@ public class WalletItemDto
     public DateTime? DayOfSold { get; set; }
 
     public CurrencyType CurrencyType { get; set; }
+
+    public WalletReadModel Wallet { get; set; }
 }

@@ -3,6 +3,7 @@ using SimpleFinance.Application.Exceptions;
 using SimpleFinance.Application.Services;
 using SimpleFinance.Domain.Entities;
 using SimpleFinance.Domain.Repositories;
+using SimpleFinance.Domain.ValueObjects;
 
 namespace SimpleFinance.Application.Commands.WalletCommands;
 
@@ -26,7 +27,8 @@ internal sealed class CreateWalletHandler : IRequestHandler<CreateWallet>
         if (await _readService.ExistsByNameAsync(name))
             throw new WalletAlreadyExistsException(name);
 
-        Wallet wallet = new(id, name);
+        ObjectId oid = new ObjectId(id, "Wallet");
+        Wallet wallet = new Wallet(oid, name);
 
         await _repository.AddAsync(wallet);
 

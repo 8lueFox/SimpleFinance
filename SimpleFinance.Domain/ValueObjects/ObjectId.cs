@@ -15,5 +15,5 @@ public record ObjectId
         => id.Value;
 
     public static implicit operator ObjectId(Guid id)
-        => new(id);
+        => new(id, "None");
 }

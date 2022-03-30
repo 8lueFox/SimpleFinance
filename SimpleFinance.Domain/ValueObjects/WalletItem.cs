@@ -2,24 +2,24 @@
 
 public record WalletItem
 {
-    public WalletItem(string currencyName, double quantity, double price, CurrencyType currencyType)
+    public WalletItem(string currencyName, float quantity, float price, CurrencyType currencyType)
     {
         CurrencyName = currencyName;
         Quantity = quantity;
         Price = price;
-        DayOfBought = DateTime.Now;
+        DayOfBought = DateTime.UtcNow;
         CurrencyType = currencyType;
     }
 
     public string CurrencyName { get; }
-    public double Quantity { get; }
-    public double Price { get; }
-    public double? PriceSold { get; set; }
+    public float Quantity { get; }
+    public float Price { get; }
+    public float? PriceSold { get; set; }
     public CurrencyType CurrencyType { get; }
     public DateTime DayOfBought { get; }
     public DateTime? DayOfSold { get; set; }
 
-    public void MarkAsSold(double priceSold)
+    public void MarkAsSold(float priceSold)
     {
         if (priceSold == 0d)
             throw new ZeroPriceSoldException();
