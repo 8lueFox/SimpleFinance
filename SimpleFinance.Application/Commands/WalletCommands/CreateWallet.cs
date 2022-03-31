@@ -9,7 +9,7 @@ namespace SimpleFinance.Application.Commands.WalletCommands;
 
 public record CreateWallet(Guid Id, string Name) : IRequest;
 
-internal sealed class CreateWalletHandler : IRequestHandler<CreateWallet>
+public sealed class CreateWalletHandler : IRequestHandler<CreateWallet>
 {
     private readonly IWalletRepository _repository;
     private readonly IWalletReadService _readService;
