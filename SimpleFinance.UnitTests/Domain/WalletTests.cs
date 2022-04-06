@@ -25,7 +25,7 @@ public class WalletTests
 
         //ASSERT
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<WalletItemAlreadyExistsException>();
+        exception.ShouldBeOfType<WalletStockMarketAlreadyExistsException>();
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class WalletTests
         exception.ShouldBeNull();
         wallet.Events.Count().ShouldBe(1);
 
-        var @event = wallet.Events.FirstOrDefault() as WalletItemAdded;
+        var @event = wallet.Events.FirstOrDefault() as WalletStockMarketAdded;
 
         @event.ShouldNotBeNull();
 
@@ -57,7 +57,7 @@ public class WalletTests
         var exception = Record.Exception(() => wallet.MarkItemAsSold("BTC", 20, DateTime.Now, 30));
 
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<WalletItemNotFoundException>();
+        exception.ShouldBeOfType<WalletStockMarketNotFoundException>();
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public class WalletTests
         exception.ShouldBeNull();
         wallet.Events.Count().ShouldBe(1);
 
-        var @event = wallet.Events.FirstOrDefault() as WalletItemRemoved;
+        var @event = wallet.Events.FirstOrDefault() as WalletStockMarketRemoved;
 
         @event.ShouldNotBeNull();
 

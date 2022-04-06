@@ -6,7 +6,7 @@ public class Wallet : AggregateRoot<ObjectId>
 {
     public WalletName _name;
 
-    private readonly LinkedList<WalletItem> _items;
+    private readonly LinkedList<StockMarket> _markets;
 
     public Wallet()
     {
@@ -17,27 +17,27 @@ public class Wallet : AggregateRoot<ObjectId>
     {
         Id = id;
         _name = walletName;
-        _items = new();
+        _markets = new();
     }
 
-    public Wallet(ObjectId id, WalletName walletName, LinkedList<WalletItem> items)
+    public Wallet(ObjectId id, WalletName walletName, LinkedList<StockMarket> items)
         :this(id, walletName)
     {
-        _items = items;
+        _markets = items;
     }
 
-    public void AddItem(WalletItem item)
+    public void AddItem(StockMarket item)
     {
-        var alreadyExists = _items.Any(i => i.Compare(item));
+        var alreadyExists = _markets.Any(i => i._name == item._name);
 
         if (alreadyExists)
-            throw new WalletItemAlreadyExistsException(item.CurrencyName, item.Quantity, _name.Value);
+            throw new WalletStockMarketAlreadyExistsException(item._name, _name);
 
-        _items.AddLast(item);
-        AddEvent(new WalletItemAdded(this, item));
+        _markets.AddLast(item);
+        AddEvent(new WalletStockMarketAdded(this, item));
     }
 
-    public void AddItems(IEnumerable<WalletItem> items)
+    public void AddItems(IEnumerable<StockMarket> items)
     {
         foreach (var item in items)
         {
@@ -45,30 +45,19 @@ public class Wallet : AggregateRoot<ObjectId>
         }
     }
 
-    public void MarkItemAsSold(string currency, double quantity, DateTime dayOfBought, float priceSold)
+    public void RemoveItem(StockMarket stockMarket)
     {
-        var item = GetItem(currency, quantity, dayOfBought);
-        var soldItem = item with { DayOfSold = DateTime.Now, PriceSold = priceSold };
-
-        _items.Find(item)!.Value = soldItem;
-        AddEvent(new WalletItemSold(this, item));
+        var item = GetItem(stockMarket);
+        _markets.Remove(item);
+        AddEvent(new WalletStockMarketRemoved(this, item));
     }
 
-    public void RemoveItem(string currency, double quantity, DateTime dayOfBought)
+    private StockMarket GetItem(StockMarket stockMarket)
     {
-        var item = GetItem(currency, quantity, dayOfBought);
-        _items.Remove(item);
-        AddEvent(new WalletItemRemoved(this, item));
-    }
-
-    private WalletItem GetItem(string currency, double quantity, DateTime dayOfBought)
-    {
-        var item = _items.SingleOrDefault(i => i.CurrencyName == currency 
-                                            && i.Quantity == quantity 
-                                            && i.DayOfBought.ToShortDateString() == dayOfBought.ToShortDateString());
+        var item = _markets.SingleOrDefault(i => i._name == stockMarket._name);
 
         if (item is null)
-            throw new WalletItemNotFoundException(currency, quantity, dayOfBought);
+            throw new WalletStockMarketNotFoundException(stockMarket._name);
 
         return item;
     }

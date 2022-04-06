@@ -2,4 +2,4 @@
 
 namespace SimpleFinance.Domain.Events;
 
-public record WalletItemRemoved(Wallet Wallet, WalletItem item) : IDomainEvent;
+public record WalletStockMarketAdded(Wallet Wallet, StockMarket item) : IDomainEvent;
